@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>JALALI.EDITS | Neon Rush</title>
+
+<style>
+:root {
+    --cyan: #00f5ff;
+    --purple: #a855f7;
+    --pink: #ff3dba;
+    --bg: #070816;
+    --panel: rgba(18, 21, 47, 0.88);
+    --text: #f5f7ff;
+    --muted: #a5accd;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+button {
+    font: inherit;
+}
+
+button:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 4px;
+}
+
+#stars {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.background-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.17;
+    pointer-events: none;
+    z-index: -1;
+    animation: floatGlow 9s ease-in-out infinite alternate;
+}
+
+.glow-one {
+    top: -150px;
+    left: -100px;
+    background: var(--cyan);
+}
+
+.glow-two {
+    right: -150px;
+    bottom: -150px;
+    background: var(--purple);
+    animation-delay: -4s;
+}
+
+@keyframes floatGlow {
+    from { transform: translate(0, 0); }
+    to { transform: translate(60px, 45px); }
+}
+
+header {
+    width: 100%;
+    padding: 22px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(7, 8, 22, 0.75);
+    backdrop-filter: blur(15px);
+}
+
+.brand {
+    font-size: 21px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.brand span {
+    color: var(--cyan);
+}
+
+.status {
+    color: var(--cyan);
+    font-size: 11px;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #36ff9f;
+    box-shadow: 0 0 12px #36ff9f;
+}
+
+main {
+    width: 100%;
+    max-width: 1050px;
+    margin: auto;
+    padding: 45px 20px 30px;
+}
+
+.screen {
+    display: none;
+    animation: screenIn 0.45s ease both;
+}
+
+.screen.active {
+    display: block;
+}
+
+@keyframes screenIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero {
+    text-align: center;
+    padding: 20px 0 25px;
+}
+
+.eyebrow {
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+}
+
+.hero h1 {
+    font-size: clamp(39px, 8vw, 82px);
+    line-height: 1.05;
+    letter-spacing: -3px;
+    font-weight: 900;
+}
+
+.hero h1 span {
+    color: var(--cyan);
+    text-shadow: 0 0 28px rgba(0,245,255,0.38);
+}
+
+.hero h2 {
+    margin-top: 12px;
+    color: #c8b8ff;
+    font-size: 17px;
+    letter-spacing: 8px;
+}
+
+.description {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 480px;
+    margin: 22px auto;
+    font-size: 14px;
+}
+
+.menu-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 28px 0;
+}
+
+.btn {
+    padding: 14px 25px;
+    min-width: 135px;
+    border-radius: 9px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.04);
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,0.10);
+}
+
+.btn-primary {
+    background: var(--cyan);
+    color: #06101a;
+    border-color: var(--cyan);
+    box-shadow: 0 0 25px rgba(0,245,255,0.18);
+}
+
+.btn-primary:hover {
+    background: #a0ffff;
+    box-shadow: 0 0 30px rgba(0,245,255,0.35);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 15px;
+    margin-top: 42px;
+}
+
+.feature-card {
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 13px;
+    padding: 23px 15px;
+    text-align: center;
+    transition: border-color 0.25s, transform 0.25s;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0,245,255,0.5);
+}
+
+.feature-icon {
+    font-size: 28px;
+    margin-bottom: 13px;
+}
+
+.feature-card h3 {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.feature-card p {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.best-score {
+    margin-top: 22px;
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+}
+
+.best-score strong {
+    color: var(--cyan);
+}
+
+/* Game screen */
+
+.game-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.game-heading h2 {
+    font-size: 19px;
+}
+
+.small-btn {
+    background: transparent;
+    color: var(--muted);
+    border: 1px solid #343753;
+    border-radius: 7px;
+    padding: 9px 12px;
+    cursor: pointer;
+}
+
+.small-btn:hover {
+    color: white;
+    border-color: var(--cyan);
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 14px;
+}
+
+.stat {
+    padding: 13px 8px;
+    text-align: center;
+    border-radius: 9px;
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.stat-label {
+    display: block;
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.stat strong {
+    color: var(--cyan);
+    font-size: 23px;
+}
+
+.canvas-wrap {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 13px;
+    border: 1px solid rgba(0,245,255,0.6);
+    box-shadow: 0 0 30px rgba(0,245,255,0.08);
+    background: #090b20;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    touch-action: none;
+}
+
+.game-message {
+    color: var(--muted);
+    font-size: 13px;
+    text-align: center;
+    margin: 14px 0;
+    min-height: 18px;
+}
+
+.game-controls {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.game-actions {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 18px 0;
+}
+
+/* Settings and About */
+
+.content-panel {
+    max-width: 550px;
+    margin: 15px auto;
+    background: var(--panel);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 15px;
+    padding: 28px;
+}
+
+.content-panel h2 {
+    color: var(--cyan);
+    margin-bottom: 22px;
+    font-size: 26px;
+}
+
+.setting-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.setting-row p {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.setting-row small {
+    display: block;
+    color: var(--muted);
+    font-weight: normal;
+    margin-top: 7px;
+    line-height: 1.5;
+}
+
+select {
+    max-width: 145px;
+    background: #171a36;
+    color: white;
+    border: 1px solid #464b70;
+    border-radius: 7px;
+    padding: 10px;
+}
+
+.switch {
+    width: 48px;
+    height: 26px;
+    accent-color: var(--cyan);
+    cursor: pointer;
+}
+
+.about-text {
+    color: var(--muted);
+    line-height: 1.9;
+    font-size: 14px;
+}
+
+.about-logo {
+    font-size: 31px;
+    font-weight: 900;
+    margin: 20px 0;
+}
+
+.about-logo span {
+    color: var(--cyan);
+}
+
+footer {
+    border-top: 1px solid rgba(255,255,255,0.07);
+    text-align: center;
+    padding: 22px 12px;
+    color: #72799c;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 18px 5%;
+    }
+
+    .brand {
+        font-size: 16px;
+    }
+
+    .status {
+        font-size: 9px;
+        letter-spacing: 1px;
+    }
+
+    main {
+        padding: 30px 14px;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+        margin-top: 25px;
+    }
+
+    .feature-card {
+        padding: 17px;
+    }
+
+    .hero h1 {
+        letter-spacing: -1px;
+    }
+
+    .hero h2 {
+        letter-spacing: 5px;
+    }
+
+    .content-panel {
+        padding: 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+</head>
+
+<audio id="gameSound" autoplay loop>
+        <source src="audio/sound.mp3" type="audio/mpeg">
+    </audio>
+
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<div class="background-glow glow-one"></div>
+<div class="background-glow glow-two"></div>
+
+<header>
+    <div class="brand">JALALI<span>.EDITS</span></div>
+    <div class="status">
+        <span class="status-dot"></span>
+        ARCADE SYSTEM ONLINE
+    </div>
+</header>
+
+<main>
+
+    <!-- MAIN MENU -->
+    <section id="homeScreen" class="screen active">
+
+        <div class="hero">
+            <div class="eyebrow">WELCOME TO THE ARCADE</div>
+
+            <h1>JALALI<span>.EDITS</span></h1>
+            <h2>NEON RUSH</h2>
+
+            <p class="description">
+                Enter the neon world. Dodge the obstacles, beat your
+                high score, and prove your skills in this arcade challenge.
+            </p>
+
+            <div class="menu-buttons">
+                <button class="btn btn-primary" id="playBtn">
+                    ▶ &nbsp; PLAY GAME
+                </button>
+
+                <button class="btn" id="settingsBtn">
+                    ⚙ &nbsp; SETTINGS
+                </button>
+
+                <button class="btn" id="aboutBtn">
+                    ⓘ &nbsp; ABOUT
+                </button>
+            </div>
+        </div>
+
+        <div class="feature-grid">
+
+            <article class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>FAST ACTION</h3>
+                <p>Move quickly and avoid incoming neon obstacles.</p>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>BEAT YOUR BEST</h3>
+                <p>Improve your score and set a new personal record.</p>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon">🌌</div>
+                <h3>NEON UNIVERSE</h3>
+                <p>Enjoy a glowing arcade world with animated stars.</p>
+            </article>
+
+        </div>
+
+        <div class="best-score">
+            PERSONAL BEST: <strong id="menuBest">0</strong>
+        </div>
+
+    </section>
+
+    <!-- GAME SCREEN -->
+    <section id="gameScreen" class="screen">
+
+        <div class="game-heading">
+            <h2>⚡ NEON RUSH</h2>
+            <button class="small-btn" id="menuBtn">← MAIN MENU</button>
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+                <span class="stat-label">SCORE</span>
+                <strong id="score">0</strong>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">BEST</span>
+                <strong id="best">0</strong>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">LEVEL</span>
+                <strong id="level">1</strong>
+            </div>
+
+        </div>
+
+        <div class="canvas-wrap">
+            <canvas id="gameCanvas"
+                    width="600"
+                    height="400"
+                    aria-label="Neon Rush game. Use arrow keys or touch to move.">
+            </canvas>
+        </div>
+
+        <p id="gameMessage" class="game-message" aria-live="polite">
+            Ready? Press START to begin.
+        </p>
+
+        <div class="game-controls">
+            COMPUTER: ← → or A / D keys<br>
+            MOBILE: Touch and move inside the game area
+        </div>
+
+        <div class="game-actions">
+            <button class="btn btn-primary" id="startBtn">
+                ▶ START
+            </button>
+
+            <button class="btn" id="restartBtn">
+                ↻ RESTART
+            </button>
+        </div>
+
+    </section>
+
+    <!-- SETTINGS SCREEN -->
+    <section id="settingsScreen" class="screen">
+
+        <div class="content-panel">
+            <h2>⚙ Settings</h2>
+
+            <div class="setting-row">
+                <div>
+                    <p>Sound Effects</p>
+                    <small>Enable or disable game sounds.</small>
+                </div>
+                <input class="switch" type="checkbox" id="soundToggle"
+                       checked aria-label="Enable sound effects">
+            </div>
+
+            <div class="setting-row">
+                <div>
+                    <p>Difficulty</p>
+                    <small>Choose how challenging the game is.</small>
+                </div>
+
+                <select id="difficulty">
+                    <option value="easy">Easy</option>
+                    <option value="normal" selected>Normal</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+
+            <div class="setting-row">
+                <div>
+                    <p>Reset Personal Best</p>
+                    <small>Reset your saved high score to zero.</small>
+                </div>
+
+                <button class="small-btn" id="resetBestBtn">
+                    RESET
+                </button>
+            </div>
+
+            <div class="menu-buttons">
+                <button class="btn btn-primary" id="settingsBackBtn">
+                    ← BACK TO MENU
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ABOUT SCREEN -->
+    <section id="aboutScreen" class="screen">
+
+        <div class="content-panel">
+            <div class="about-logo">JALALI<span>.EDITS</span></div>
+
+            <h2>About the Game</h2>
+
+            <p class="about-text">
+                Welcome to Neon Rush, a small arcade game created as
+                the JALALI.EDITS game development project.
+                <br><br>
+                Your mission is simple: control your neon player,
+                dodge incoming obstacles, survive as long as possible,
+                and increase your score.
+                <br><br>
+                Built using HTML, CSS and JavaScript.
+                Designed to run directly in your web browser.
+                <br><br>
+                Version 2.0
+            </p>
+
+            <div class="menu-buttons">
+                <button class="btn btn-primary" id="aboutBackBtn">
+                    ← BACK TO MENU
+                </button>
+            </div>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    JALALI.EDITS &nbsp; | &nbsp; NEON RUSH &nbsp; | &nbsp; VERSION 2.0
+</footer>
+
+<script>
+"use strict";
+
+/* --------------------------------
+   SCREEN NAVIGATION
+-------------------------------- */
+
+const screens = {
+    home: document.getElementById("homeScreen"),
+    game: document.getElementById("gameScreen"),
+    settings: document.getElementById("settingsScreen"),
+    about: document.getElementById("aboutScreen")
+};
+
+function showScreen(name) {
+    if (!screens[name]) return;
+
+    Object.values(screens).forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    screens[name].classList.add("active");
+
+    if (name !== "game") {
+        pauseGame();
+    }
+
+    if (name === "home") {
+        updateBestDisplays();
+    }
+}
+
+document.getElementById("playBtn").addEventListener("click", () => {
+    showScreen("game");
+    resetGame();
+});
+
+document.getElementById("settingsBtn").addEventListener("click", () => {
+    showScreen("settings");
+});
+
+document.getElementById("aboutBtn").addEventListener("click", () => {
+    showScreen("about");
+});
+
+document.getElementById("menuBtn").addEventListener("click", () => {
+    showScreen("home");
+});
+
+document.getElementById("settingsBackBtn").addEventListener("click", () => {
+    showScreen("home");
+});
+
+document.getElementById("aboutBackBtn").addEventListener("click", () => {
+    showScreen("home");
+});
+
+
+/* --------------------------------
+   SETTINGS
+-------------------------------- */
+
+const soundToggle = document.getElementById("soundToggle");
+const difficultySelect = document.getElementById("difficulty");
+
+let soundEnabled = true;
+let difficulty = "normal";
+
+soundToggle.addEventListener("change", () => {
+    soundEnabled = soundToggle.checked;
+});
+
+difficultySelect.addEventListener("change", () => {
+    difficulty = difficultySelect.value;
+});
+
+let best = 0;
+
+try {
+    best = Number(localStorage.getItem("jalaliNeonBest")) || 0;
+} catch (error) {
+    best = 0;
+}
+
+function updateBestDisplays() {
+    document.getElementById("best").textContent = best;
+    document.getElementById("menuBest").textContent = best;
+}
+
+document.getElementById("resetBestBtn").addEventListener("click", () => {
+    best = 0;
+
+    try {
+        localStorage.setItem("jalaliNeonBest", "0");
+    } catch (error) {
+        // The game can still play without saved storage.
+    }
+
+    updateBestDisplays();
+});
+
+
+/* --------------------------------
+   OPTIONAL SOUND EFFECTS
+-------------------------------- */
+
+let audioContext = null;
+
+function playSound(frequency, duration = 0.08, type = "sine") {
+    if (!soundEnabled) return;
+
+    try {
+        const AudioContextClass =
+            window.AudioContext || window.webkitAudioContext;
+
+        if (!AudioContextClass) return;
+
+        if (!audioContext) {
+            audioContext = new AudioContextClass();
+        }
+
+        if (audioContext.state === "suspended") {
+            audioContext.resume();
+        }
+
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.type = type;
+        oscillator.frequency.value = frequency;
+
+        gain.gain.setValueAtTime(0.06, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(
+            0.001,
+            audioContext.currentTime + duration
+        );
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.start();
+        oscillator.stop(audioContext.currentTime + duration);
+    } catch (error) {
+        // Sound is optional.
+    }
+}
+
+
+/* --------------------------------
+   ANIMATED STAR BACKGROUND
+-------------------------------- */
+
+const starCanvas = document.getElementById("stars");
+const starCtx = starCanvas.getContext("2d");
+
+let stars = [];
+let starWidth = 0;
+let starHeight = 0;
+let starFrame = null;
+
+function resizeStars() {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+
+    starWidth = window.innerWidth;
+    starHeight = window.innerHeight;
+
+    starCanvas.width = Math.round(starWidth * ratio);
+    starCanvas.height = Math.round(starHeight * ratio);
+
+    starCtx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+    const count = Math.min(
+        120,
+        Math.floor(starWidth * starHeight / 8500)
+    );
+
+    stars = Array.from({ length: count }, () => ({
+        x: Math.random() * starWidth,
+        y: Math.random() * starHeight,
+        size: 0.5 + Math.random() * 1.5,
+        speed: 5 + Math.random() * 15,
+        alpha: 0.2 + Math.random() * 0.7
+    }));
+}
+
+function animateStars() {
+    starCtx.clearRect(0, 0, starWidth, starHeight);
+
+    for (const star of stars) {
+        star.y -= star.speed / 60;
+
+        if (star.y < 0) {
+            star.y = starHeight;
+            star.x = Math.random() * starWidth;
+        }
+
+        starCtx.beginPath();
+        starCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+
+        starCtx.fillStyle = `rgba(150, 220, 255, ${star.alpha})`;
+        starCtx.fill();
+    }
+
+    starFrame = requestAnimationFrame(animateStars);
+}
+
+resizeStars();
+animateStars();
+
+window.addEventListener("resize", resizeStars);
+
+
+/* --------------------------------
+   GAME ENGINE
+-------------------------------- */
+
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+const scoreEl = document.getElementById("score");
+const bestEl = document.getElementById("best");
+const levelEl = document.getElementById("level");
+const gameMessage = document.getElementById("gameMessage");
+const startBtn = document.getElementById("startBtn");
+
+let player;
+let obstacles = [];
+let particles = [];
+let score = 0;
+let running = false;
+let gameOver = false;
+let animationId = null;
+let lastTime = 0;
+let spawnTimer = 0;
+let elapsedTime = 0;
+
+const keys = Object.create(null);
+
+function resetGame() {
+    pauseGame();
+
+    player = {
+        x: canvas.width / 2 - 16,
+        y: canvas.height - 65,
+        width: 32,
+        height: 32,
+        speed: 300
+    };
+
+    obstacles = [];
+    particles = [];
+    score = 0;
+    spawnTimer = 0;
+    elapsedTime = 0;
+    gameOver = false;
+
+    scoreEl.textContent = "0";
+    levelEl.textContent = "1";
+    bestEl.textContent = best;
+
+    gameMessage.textContent = "Ready? Press START to begin.";
+    startBtn.disabled = false;
+    startBtn.textContent = "▶ START";
+
+    drawGame();
+}
+
+function startGame() {
+    if (running) return;
+
+    if (gameOver) {
+        resetGame();
+    }
+
+    running = true;
+    lastTime = 0;
+
+    startBtn.disabled = true;
+    startBtn.textContent = "GAME RUNNING";
+    gameMessage.textContent = "Stay sharp. Avoid the neon blocks!";
+
+    playSound(600, 0.12);
+
+    if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+    }
+
+    animationId = requestAnimationFrame(gameLoop);
+}
+
+function pauseGame() {
+    running = false;
+
+    if (animationId !== null) {
+        cancelAnimationFrame(animationId);
+        animationId = null;
+    }
+
+    startBtn.disabled = false;
+
+    if (!gameOver) {
+        startBtn.textContent = "▶ RESUME";
+    }
+}
+
+function finishGame() {
+    if (gameOver) return;
+
+    running = false;
+    gameOver = true;
+    animationId = null;
+
+    if (score > best) {
+        best = score;
+
+        try {
+            localStorage.setItem("jalaliNeonBest", String(best));
+        } catch (error) {
+            // Saving a high score is optional.
+        }
+    }
+
+    updateBestDisplays();
+
+    bestEl.textContent = best;
+    startBtn.disabled = false;
+    startBtn.textContent = "▶ PLAY AGAIN";
+
+    gameMessage.textContent =
+        "GAME OVER! Score: " + score + ". Press RESTART to try again.";
+
+    playSound(150, 0.3, "triangle");
+
+    drawGame();
+}
+
+function spawnObstacle() {
+    const width = 24 + Math.random() * 42;
+
+    const speedMultiplier = {
+        easy: 0.75,
+        normal: 1,
+        hard: 1.4
+    }[difficulty];
+
+    obstacles.push({
+        x: Math.random() * (canvas.width - width),
+        y: -40,
+        width: width,
+        height: 18 + Math.random() * 25,
+        speed: (100 + Math.random() * 65 + elapsedTime * 1.5)
+               * speedMultiplier,
+        hue: Math.random() > 0.5 ? 320 : 190
+    });
+}
+
+function collides(a, b) {
+    return (
+        a.x < b.x + b.width &&
+        a.x + a.width > b.x &&
+        a.y < b.y + b.height &&
+        a.y + a.height > b.y
+    );
+}
+
+function createParticles(x, y, color) {
+    for (let i = 0; i < 10; i++) {
+        particles.push({
+            x: x,
+            y: y,
+            vx: (Math.random() - 0.5) * 180,
+            vy: (Math.random() - 0.5) * 180,
+            life: 0.4 + Math.random() * 0.4,
+            color: color
+        });
+    }
+}
+
+function updateGame(dt) {
+    elapsedTime += dt;
+
+    let direction = 0;
+
+    if (keys.ArrowLeft || keys.a || keys.A) direction -= 1;
+    if (keys.ArrowRight || keys.d || keys.D) direction += 1;
+
+    player.x += direction * player.speed * dt;
+
+    player.x = Math.max(
+        0,
+        Math.min(canvas.width - player.width, player.x)
+    );
+
+    const level = 1 + Math.floor(score / 10);
+
+    levelEl.textContent = level;
+
+    spawnTimer += dt;
+
+    const spawnInterval = Math.max(
+        0.25,
+        (0.9 - level * 0.035) *
+        ({ easy: 1.35, normal: 1, hard: 0.72 }[difficulty])
+    );
+
+    if (spawnTimer >= spawnInterval) {
+        spawnTimer = 0;
+        spawnObstacle();
+    }
+
+    for (const obstacle of obstacles) {
+        obstacle.y += obstacle.speed * dt;
+
+        if (collides(player, obstacle)) {
+            createParticles(
+                player.x + player.width / 2,
+                player.y + player.height / 2,
+                "#00f5ff"
+            );
+
+            finishGame();
+            return;
+        }
+    }
+
+    const remaining = [];
+
+    for (const obstacle of obstacles) {
+        if (obstacle.y > canvas.height) {
+            score++;
+            scoreEl.textContent = score;
+
+            if (score % 5 === 0) {
+                playSound(750, 0.06);
+            }
+        } else {
+            remaining.push(obstacle);
+        }
+    }
+
+    obstacles = remaining;
+
+    for (const particle of particles) {
+        particle.x += particle.vx * dt;
+        particle.y += particle.vy * dt;
+        particle.life -= dt;
+    }
+
+    particles = particles.filter(particle => particle.life > 0);
+}
+
+function drawGame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#090b20";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Background grid
+    ctx.strokeStyle = "rgba(90, 110, 190, 0.13)";
+    ctx.lineWidth = 1;
+
+    for (let x = 0; x <= canvas.width; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+    }
+
+    for (let y = 0; y <= canvas.height; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+    }
+
+    // Player
+    if (player) {
+        ctx.save();
+
+        ctx.shadowColor = "#00f5ff";
+        ctx.shadowBlur = 22;
+        ctx.fillStyle = "#00f5ff";
+
+        ctx.beginPath();
+        ctx.roundRect(
+            player.x,
+            player.y,
+            player.width,
+            player.height,
+            7
+        );
+
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+        ctx.fillStyle = "#08111f";
+        ctx.fillRect(
+            player.x + 8,
+            player.y + 8,
+            player.width - 16,
+            player.height - 16
+        );
+
+        ctx.restore();
+    }
+
+    // Obstacles
+    for (const obstacle of obstacles) {
+        ctx.save();
+
+        const color = `hsl(${obstacle.hue}, 100%, 62%)`;
+
+        ctx.fillStyle = color;
+        ctx.shadowColor = color;
+        ctx.shadowBlur = 17;
+
+        ctx.beginPath();
+        ctx.roundRect(
+            obstacle.x,
+            obstacle.y,
+            obstacle.width,
+            obstacle.height,
+            5
+        );
+
+        ctx.fill();
+        ctx.restore();
+    }
+
+    // Particles
+    for (const particle of particles) {
+        ctx.save();
+        ctx.globalAlpha = Math.min(1, particle.life * 2);
+        ctx.fillStyle = particle.color;
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, 3, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+    }
+
+    if (!running && !gameOver) {
+        ctx.fillStyle = "rgba(5, 7, 24, 0.78)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#00f5ff";
+        ctx.font = "bold 28px Arial";
+        ctx.fillText("NEON RUSH", canvas.width / 2, 170);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "15px Arial";
+        ctx.fillText(
+            "Press START to begin",
+            canvas.width / 2,
+            205
+        );
+    }
+
+    if (gameOver) {
+        ctx.fillStyle = "rgba(5, 7, 24, 0.82)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#ff3dba";
+        ctx.font = "bold 34px Arial";
+        ctx.fillText("GAME OVER", canvas.width / 2, 165);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "20px Arial";
+        ctx.fillText(
+            "YOUR SCORE: " + score,
+            canvas.width / 2,
+            205
+        );
+
+        ctx.fillStyle = "#00f5ff";
+        ctx.font = "15px Arial";
+        ctx.fillText(
+            "Press RESTART to play again",
+            canvas.width / 2,
+            240
+        );
+    }
+}
+
+function gameLoop(timestamp) {
+    if (!running) {
+        animationId = null;
+        return;
+    }
+
+    const dt = lastTime
+        ? Math.min((timestamp - lastTime) / 1000, 0.04)
+        : 0;
+
+    lastTime = timestamp;
+
+    updateGame(dt);
+
+    if (running) {
+        drawGame();
+        animationId = requestAnimationFrame(gameLoop);
+    } else {
+        animationId = null;
+    }
+}
+
+
+/* --------------------------------
+   KEYBOARD AND TOUCH CONTROLS
+-------------------------------- */
+
+document.addEventListener("keydown", event => {
+    if (
+        ["ArrowLeft", "ArrowRight", " "].includes(event.key) &&
+        screens.game.classList.contains("active")
+    ) {
+        event.preventDefault();
+    }
+
+    keys[event.key] = true;
+});
+
+document.addEventListener("keyup", event => {
+    keys[event.key] = false;
+});
+
+window.addEventListener("blur", () => {
+    Object.keys(keys).forEach(key => {
+        keys[key] = false;
+    });
+});
+
+function movePlayerToPointer(event) {
+    if (!player || !running) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+
+    player.x =
+        (event.clientX - rect.left) * scaleX -
+        player.width / 2;
+
+    player.x = Math.max(
+        0,
+        Math.min(canvas.width - player.width, player.x)
+    );
+
+    drawGame();
+}
+
+canvas.addEventListener("pointerdown", event => {
+    if (!running) return;
+
+    canvas.setPointerCapture(event.pointerId);
+    movePlayerToPointer(event);
+});
+
+canvas.addEventListener("pointermove", event => {
+    if (
+        running &&
+        (event.buttons > 0 || event.pointerType === "touch")
+    ) {
+        movePlayerToPointer(event);
+    }
+});
+
+
+/* --------------------------------
+   GAME BUTTONS
+-------------------------------- */
+
+startBtn.addEventListener("click", startGame);
+
+document.getElementById("restartBtn").addEventListener("click", () => {
+    resetGame();
+    startGame();
+});
+
+
+/* --------------------------------
+   INITIALIZE
+-------------------------------- */
+
+resetGame();
+updateBestDisplays();
+
+</script>
+<audio id="backgroundMusic" src="audio/sound.mp3" loop preload="auto"></audio>
+
+<script>
+const backgroundMusic = document.getElementById("backgroundMusic");
+backgroundMusic.volume = 0.3;
+const gameSoundToggle = document.getElementById("soundToggle");
+
+if (gameSoundToggle) {
+    gameSoundToggle.addEventListener("change", function () {
+        if (gameSoundToggle.checked) {
+            backgroundMusic.play().catch(error => {
+                console.log("Music playback issue:", error);
+            });
+        } else {
+            backgroundMusic.pause();
+        }
+    });
+}
+document.addEventListener("click", function startMusic() {
+    backgroundMusic.play().catch(error => {
+        console.log("Music playback issue:", error);
+    });
+}, { once: true });
+</script>
+
+</body>
+</html>
